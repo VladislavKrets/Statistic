@@ -1,7 +1,4 @@
-package online.omnia.finance_now.utils;
-
-import org.hibernate.annotations.*;
-import org.hibernate.annotations.Parameter;
+package online.omnia.finance_now.campaign;
 
 import javax.persistence.*;
 import javax.persistence.Entity;

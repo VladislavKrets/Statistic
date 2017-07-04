@@ -1,7 +1,7 @@
 package online.omnia.finance_now;
 
-import online.omnia.finance_now.utils.Account;
-import online.omnia.finance_now.utils.AccountEntity;
+import online.omnia.finance_now.campaign.Account;
+import online.omnia.finance_now.campaign.AccountEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;

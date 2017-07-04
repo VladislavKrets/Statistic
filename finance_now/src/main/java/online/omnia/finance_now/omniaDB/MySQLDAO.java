@@ -1,6 +1,6 @@
 package online.omnia.finance_now.omniaDB;
 
-import online.omnia.finance_now.utils.Account;
+import online.omnia.finance_now.campaign.Account;
 import online.omnia.finance_now.utils.FinanceNow;
 
 import java.util.List;

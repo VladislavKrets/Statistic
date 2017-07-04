@@ -1,4 +1,4 @@
-package online.omnia.finance_now.campaign.cheetah;
+package online.omnia.finance_now.networks.cheetah;
 
 import com.google.gson.*;
 import org.apache.log4j.Logger;
