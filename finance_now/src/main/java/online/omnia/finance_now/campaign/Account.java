@@ -1,7 +1,5 @@
 package online.omnia.finance_now.campaign;
 
-import online.omnia.finance_now.campaign.AccountEntity;
-
 import javax.persistence.*;
 
 /**
