@@ -14,6 +14,8 @@ public class Broker {
     public Broker() {
         networks = new ArrayList<>();
         List<Class> classes = Utils.getFilesInPackage(BaseNetwork.class);
-
+        for (Class clazz : classes) {
+            System.out.println(clazz.getName());
+        }
     }
 }

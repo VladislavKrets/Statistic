@@ -13,22 +13,18 @@ import java.util.Map;
 /**
  * Created by lollipop on 03.07.2017.
  */
-public class CheetahAds implements BaseNetwork{
-    private HttpMethodUtils cheetahMethods;
-    private Map<String, String> headersMap;
+public class CheetahAds extends BaseNetwork{
+
     final static Logger logger = Logger.getLogger(CheetahAds.class);
 
     public CheetahAds(String baseURL, String tokenKey) {
-        cheetahMethods = new HttpMethodUtils("https://api.ori.cmcm.com/");
-        headersMap = new HashMap<String, String>();
-        headersMap.put("Accept", "application/json,application/x.orion.v1+json");
-        headersMap.put("Authorization", "Bearer access_token");
+        super(baseURL, tokenKey);
 
     }
     @Override
     public String getUserBalance() {
         try {
-            String answer = cheetahMethods.getMethod("user/balance", headersMap);
+            String answer = getCheetahMethods().getMethod("user/balance", getHeadersMap());
             GsonBuilder builder = new GsonBuilder();
             builder.registerTypeAdapter(String.class, new CheetahAdsUserBalanceDeserializer());
             Gson gson = builder.create();
