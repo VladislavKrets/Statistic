@@ -3,13 +3,10 @@ package online.omnia.finance_now.networks.cheetah;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import online.omnia.finance_now.networks.BaseNetwork;
-import online.omnia.finance_now.utils.HttpMethodUtils;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
 /**
  * Created by lollipop on 03.07.2017.
  */
@@ -36,8 +33,18 @@ public class CheetahAds extends BaseNetwork{
     }
 
     @Override
-    public int getAccountId() {
-        return 0;
+    public Integer getAccountId() {
+        try {
+            String answer = getCheetahMethods().getMethod("user/info", getHeadersMap());
+            GsonBuilder builder = new GsonBuilder();
+            builder.registerTypeAdapter(Integer.class, new CheetahAdsUserIdDeserializer());
+            Gson gson = builder.create();
+            return gson.fromJson(answer, Integer.class);
+
+        } catch (IOException e) {
+            logger.debug(e.getMessage());
+        }
+        return -1;
     }
 
     @Override
