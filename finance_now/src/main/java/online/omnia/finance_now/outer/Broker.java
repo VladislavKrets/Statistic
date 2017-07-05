@@ -1,4 +1,4 @@
-package online.omnia.finance_now;
+package online.omnia.finance_now.outer;
 
 import online.omnia.finance_now.networks.BaseNetwork;
 import online.omnia.finance_now.utils.Utils;

@@ -3,9 +3,13 @@ package online.omnia.finance_now.networks.cheetah;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import online.omnia.finance_now.networks.BaseNetwork;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by lollipop on 03.07.2017.
@@ -14,9 +18,24 @@ public class CheetahAds extends BaseNetwork{
 
     final static Logger logger = Logger.getLogger(CheetahAds.class);
 
-    public CheetahAds(String baseURL, String tokenKey) {
-        super(baseURL, tokenKey);
+    public CheetahAds(String baseURL) {
+        super(baseURL);
+        getHeadersMap().put("Accept", "application/json,application/x.orion.v1+json");
+        //getHeadersMap().put("Authorization", "Bearer " + tokenKey);
 
+    }
+    public TokenEntity getAccessToken(String clientId, String clientCredential) throws IOException {
+        List<NameValuePair> nameValuePairList = new ArrayList<>();
+        nameValuePairList.add(new BasicNameValuePair("grant_type", "client_credentials"));
+        nameValuePairList.add(new BasicNameValuePair("client_id", clientId));
+        nameValuePairList.add(new BasicNameValuePair("client_secret", clientCredential));
+        String answer = getCheetahMethods().postMethod("oauth/access_token", nameValuePairList, getHeadersMap());
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(TokenEntity.class, new CheetahAdsTokenDeserializer());
+        Gson gson = builder.create();
+        TokenEntity entity = gson.fromJson(answer, TokenEntity.class);
+        getHeadersMap().put("Authorization", String.format("%s %s", entity.getTokenType(), entity.getAccessToken()));
+        return entity;
     }
     @Override
     public String getUserBalance() {
@@ -45,11 +64,6 @@ public class CheetahAds extends BaseNetwork{
             logger.debug(e.getMessage());
         }
         return -1;
-    }
-
-    @Override
-    public String getCurrency() {
-        return null;
     }
 
 }

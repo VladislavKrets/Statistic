@@ -12,16 +12,16 @@ public abstract class BaseNetwork {
     private HttpMethodUtils cheetahMethods;
     private Map<String, String> headersMap;
 
-    public BaseNetwork(String baseURL, String tokenKey) {
+    public BaseNetwork(String baseURL) {
         cheetahMethods = new HttpMethodUtils(baseURL);
         headersMap = new HashMap<String, String>();
-        headersMap.put("Accept", "application/json,application/x.orion.v1+json");
-        headersMap.put("Authorization", "Bearer " + tokenKey);
 
     }
     public abstract String getUserBalance();
     public abstract Integer getAccountId();
-    public abstract String getCurrency();
+    public String getCurrency() {
+        return "USD";
+    }
 
     public HttpMethodUtils getCheetahMethods() {
         return cheetahMethods;
