@@ -29,7 +29,7 @@ public class MyTarget extends BaseNetwork{
             nameValuePairList.add(new BasicNameValuePair("grant_type", "client_credentials"));
             nameValuePairList.add(new BasicNameValuePair("client_id", clientId));
             nameValuePairList.add(new BasicNameValuePair("client_secret", clientSecret));
-            String answer = getCheetahMethods().postMethod("oauth2/token.json", nameValuePairList, getHeadersMap());
+            String answer = methods().postMethod("oauth2/token.json", nameValuePairList, getHeadersMap());
             GsonBuilder builder = new GsonBuilder();
             builder.registerTypeAdapter(MyTargetTokenEntity.class, new MyTargetTokenDeserializer());
             Gson gson = builder.create();
@@ -44,6 +44,12 @@ public class MyTarget extends BaseNetwork{
     }
 
     @Override
+    public String getToken(String clientId, String clientKey) {
+        if (getHeadersMap().containsKey("Authorization")) return getHeadersMap().get("Authorization");
+        return getAccessToken(clientId, clientKey).getAccessToken();
+    }
+
+    @Override
     public String getUserBalance() {
         return null;
     }
@@ -52,5 +58,7 @@ public class MyTarget extends BaseNetwork{
     public Integer getAccountId() {
         return null;
     }
+
+
 
 }

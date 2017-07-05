@@ -30,7 +30,7 @@ public class CheetahAds extends BaseNetwork{
             nameValuePairList.add(new BasicNameValuePair("grant_type", "client_credentials"));
             nameValuePairList.add(new BasicNameValuePair("client_id", clientId));
             nameValuePairList.add(new BasicNameValuePair("client_secret", clientCredential));
-            String answer = getCheetahMethods().postMethod("oauth/access_token", nameValuePairList, getHeadersMap());
+            String answer = methods().postMethod("oauth/access_token", nameValuePairList, getHeadersMap());
             GsonBuilder builder = new GsonBuilder();
             builder.registerTypeAdapter(CheetahTokenEntity.class, new CheetahAdsTokenDeserializer());
             Gson gson = builder.create();
@@ -42,10 +42,17 @@ public class CheetahAds extends BaseNetwork{
         }
         return null;
     }
+
+    @Override
+    public String getToken(String clientId, String clientKey) {
+        if (getHeadersMap().containsKey("Authorization")) return getHeadersMap().get("Authorization");
+        return getAccessToken(clientId, clientKey).getAccessToken();
+    }
+
     @Override
     public String getUserBalance() {
         try {
-            String answer = getCheetahMethods().getMethod("user/balance", getHeadersMap());
+            String answer = methods().getMethod("user/balance", getHeadersMap());
             GsonBuilder builder = new GsonBuilder();
             builder.registerTypeAdapter(String.class, new CheetahAdsUserBalanceDeserializer());
             Gson gson = builder.create();
@@ -59,7 +66,7 @@ public class CheetahAds extends BaseNetwork{
     @Override
     public Integer getAccountId() {
         try {
-            String answer = getCheetahMethods().getMethod("user/info", getHeadersMap());
+            String answer = methods().getMethod("user/info", getHeadersMap());
             GsonBuilder builder = new GsonBuilder();
             builder.registerTypeAdapter(Integer.class, new CheetahAdsUserIdDeserializer());
             Gson gson = builder.create();

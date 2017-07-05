@@ -9,22 +9,23 @@ import java.util.Map;
  * Created by lollipop on 04.07.2017.
  */
 public abstract class BaseNetwork {
-    private HttpMethodUtils cheetahMethods;
+    private HttpMethodUtils methods;
     private Map<String, String> headersMap;
 
     public BaseNetwork(String baseURL) {
-        cheetahMethods = new HttpMethodUtils(baseURL);
+        methods = new HttpMethodUtils(baseURL);
         headersMap = new HashMap<String, String>();
 
     }
     public abstract String getUserBalance();
     public abstract Integer getAccountId();
+    public abstract String getToken(String clientId, String clientKey);
     public String getCurrency() {
         return "USD";
     }
 
-    public HttpMethodUtils getCheetahMethods() {
-        return cheetahMethods;
+    public HttpMethodUtils methods() {
+        return methods;
     }
 
     public Map<String, String> getHeadersMap() {

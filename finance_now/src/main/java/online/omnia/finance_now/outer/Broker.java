@@ -20,12 +20,11 @@ public class Broker {
     public Broker() {
         networks = new ArrayList<>();
         BaseNetwork network = new CheetahAds("https://api.ori.cmcm.com/");
-        String token = ((CheetahAds) network).getAccessToken("13256", "ae3a27715fb432f9ba036f163354e598").getAccessToken();
+        String token = network.getToken("13256", "ae3a27715fb432f9ba036f163354e598");
         networks.add(network);
         network = new MyTarget("https://target.my.com/api/v2/");
-        token = ((MyTarget) network).getAccessToken("6qW93na1vpBBX9O7",
-                "SSAipEtQb7vkNaEgmix5gIVll0cjP3eW7roj5uGJ5G04sEaVyRcOWxvPXhwHa5CBSoG4BgbTNGCw4ROMBIXTVePapdN3iWNNM2vvyU0geaKhtidXwkAsJNc8gF2X3dJmekKxNJGY8XtU6dEADkHRsMUIG4Gz4ovRdMVBfuMTF7G1z4QN1sJJLdybEUoyFnCyhrEifIDWygcsmKxHCWGpXzOqUFyg")
-        .getAccessToken();
+        token = network.getToken("6qW93na1vpBBX9O7",
+                "SSAipEtQb7vkNaEgmix5gIVll0cjP3eW7roj5uGJ5G04sEaVyRcOWxvPXhwHa5CBSoG4BgbTNGCw4ROMBIXTVePapdN3iWNNM2vvyU0geaKhtidXwkAsJNc8gF2X3dJmekKxNJGY8XtU6dEADkHRsMUIG4Gz4ovRdMVBfuMTF7G1z4QN1sJJLdybEUoyFnCyhrEifIDWygcsmKxHCWGpXzOqUFyg");
         networks.add(network);
 
     }
