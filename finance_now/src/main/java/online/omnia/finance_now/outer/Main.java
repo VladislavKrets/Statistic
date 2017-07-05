@@ -29,11 +29,11 @@ public class Main {
         /*
         CheetahAds ads = new CheetahAds("https://api.ori.cmcm.com/");
         System.out.println(ads.getAccessToken("13256", "ae3a27715fb432f9ba036f163354e598"));*/
-        /*MyTarget target = new MyTarget("https://target.my.com/api/v2/");
-        MyTargetTokenEntity entity = target.getAccessToken("6qW93na1vpBBX9O7",
+        MyTarget target = new MyTarget("https://target.my.com/api/v2/");
+        /*MyTargetTokenEntity entity = target.getAccessToken("6qW93na1vpBBX9O7",
                 "SSAipEtQb7vkNaEgmix5gIVll0cjP3eW7roj5uGJ5G04sEaVyRcOWxvPXhwHa5CBSoG4BgbTNGCw4ROMBIXTVePapdN3iWNNM2vvyU0geaKhtidXwkAsJNc8gF2X3dJmekKxNJGY8XtU6dEADkHRsMUIG4Gz4ovRdMVBfuMTF7G1z4QN1sJJLdybEUoyFnCyhrEifIDWygcsmKxHCWGpXzOqUFyg");
         System.out.println(entity.getAccessToken());*/
-
+        target.getAccountId();
     }
 
 }

@@ -21,6 +21,8 @@ public class MyTarget extends BaseNetwork{
     public MyTarget(String baseURL) {
         super(baseURL);
         getHeadersMap().put("Content-Type", "application/x-www-form-urlencoded");
+        getHeadersMap().put("Authorization", "Bearer AfknWkWlUUBaCwdVe9PW9KukpFeW2u2DDNdUqmU03DkiY1iYD48ByxM8oaIB2dOX2TJctp1Ms79gFx9jRUUkOg7tdCrs0UmYKP3XtbfFULaFFxKR3q6znqirFXySXIEHN7sMaH3RMmsVdV2T7RY0msdk9mjFQ48t7DFfvEcacHape3OuRzYxqU0zvmSkfhpG8NlcU5guonhiY4eQycy3r9PfQKxfqZ0tdGJxI7I1SeMLQ");
+
     }
 
     public MyTargetTokenEntity getAccessToken(String clientId, String clientSecret) {
@@ -56,6 +58,12 @@ public class MyTarget extends BaseNetwork{
 
     @Override
     public Integer getAccountId() {
+        try {
+            String answer = methods().getMethod("user.json", getHeadersMap());
+            System.out.println(answer);
+        } catch (IOException e) {
+            logger.debug(e.getMessage());
+        }
         return null;
     }
 

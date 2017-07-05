@@ -2,6 +2,8 @@ package online.omnia.finance_now.omniaDB;
 
 import online.omnia.finance_now.campaign.Account;
 import online.omnia.finance_now.campaign.AccountEntity;
+import online.omnia.finance_now.campaign.TokenEntity;
+import online.omnia.finance_now.networks.BaseNetwork;
 import online.omnia.finance_now.utils.FinanceNow;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -16,6 +18,7 @@ public class MySQLDAOImpl implements MySQLDAO{
 
     private static Configuration configuration;
     private static SessionFactory sessionFactory;
+    private static MySQLDAOImpl mySQLDAO;
 
     static {
         configuration = new Configuration()
@@ -26,14 +29,14 @@ public class MySQLDAOImpl implements MySQLDAO{
         sessionFactory = configuration.buildSessionFactory();
     }
 
+    private MySQLDAOImpl() {}
     @Override
     public List<Account> getAccounts() {
         Session session = sessionFactory.openSession();
-        List<Account> accounts =  session.createQuery("select from Account").list();
+        List<Account> accounts = session.createQuery("select from Account", Account.class).list();
         session.close();
         return accounts;
     }
-
     @Override
     public Account getAccountByName(String name) {
 
@@ -43,7 +46,7 @@ public class MySQLDAOImpl implements MySQLDAO{
     @Override
     public List<FinanceNow> getFinances() {
         Session session = sessionFactory.openSession();
-        List<FinanceNow> finances = session.createQuery("select from FinanceNow").list();
+        List<FinanceNow> finances = session.createQuery("select from FinanceNow", FinanceNow.class).list();
         session.close();
         return finances;
     }
@@ -55,5 +58,14 @@ public class MySQLDAOImpl implements MySQLDAO{
         session.save(financeNow);
         session.beginTransaction().commit();
         session.close();
+    }
+
+    public static synchronized MySQLDAOImpl getInstance() {
+        if (mySQLDAO == null) mySQLDAO = new MySQLDAOImpl();
+        return mySQLDAO;
+    }
+
+    public static SessionFactory getSessionFactory() {
+        return sessionFactory;
     }
 }
