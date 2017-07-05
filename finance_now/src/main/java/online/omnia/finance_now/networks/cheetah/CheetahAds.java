@@ -24,7 +24,7 @@ public class CheetahAds extends BaseNetwork{
         //getHeadersMap().put("Authorization", "Bearer " + tokenKey);
 
     }
-    public TokenEntity getAccessToken(String clientId, String clientCredential){
+    public CheetahTokenEntity getAccessToken(String clientId, String clientCredential){
         try {
             List<NameValuePair> nameValuePairList = new ArrayList<>();
             nameValuePairList.add(new BasicNameValuePair("grant_type", "client_credentials"));
@@ -32,9 +32,9 @@ public class CheetahAds extends BaseNetwork{
             nameValuePairList.add(new BasicNameValuePair("client_secret", clientCredential));
             String answer = getCheetahMethods().postMethod("oauth/access_token", nameValuePairList, getHeadersMap());
             GsonBuilder builder = new GsonBuilder();
-            builder.registerTypeAdapter(TokenEntity.class, new CheetahAdsTokenDeserializer());
+            builder.registerTypeAdapter(CheetahTokenEntity.class, new CheetahAdsTokenDeserializer());
             Gson gson = builder.create();
-            TokenEntity entity = gson.fromJson(answer, TokenEntity.class);
+            CheetahTokenEntity entity = gson.fromJson(answer, CheetahTokenEntity.class);
             getHeadersMap().put("Authorization", String.format("%s %s", entity.getTokenType(), entity.getAccessToken()));
             return entity;
         } catch (IOException e) {

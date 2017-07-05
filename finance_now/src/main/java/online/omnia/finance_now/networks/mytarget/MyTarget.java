@@ -1,24 +1,46 @@
 package online.omnia.finance_now.networks.mytarget;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import online.omnia.finance_now.networks.BaseNetwork;
-import org.apache.commons.codec.binary.Base64;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.log4j.Logger;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.security.InvalidKeyException;
-import java.security.Key;
-import java.security.NoSuchAlgorithmException;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
  * Created by lollipop on 05.07.2017.
  */
 public class MyTarget extends BaseNetwork{
-
-    public MyTarget(String baseURL, String tokenKey) {
+    final static Logger logger = Logger.getLogger(MyTarget.class);
+    public MyTarget(String baseURL) {
         super(baseURL);
+        getHeadersMap().put("Content-Type", "application/x-www-form-urlencoded");
+    }
+
+    public MyTargetTokenEntity getAccessToken(String clientId, String clientSecret) {
+        try {
+            List<NameValuePair> nameValuePairList = new ArrayList<>();
+            nameValuePairList.add(new BasicNameValuePair("grant_type", "client_credentials"));
+            nameValuePairList.add(new BasicNameValuePair("client_id", clientId));
+            nameValuePairList.add(new BasicNameValuePair("client_secret", clientSecret));
+            String answer = getCheetahMethods().postMethod("oauth2/token.json", nameValuePairList, getHeadersMap());
+            GsonBuilder builder = new GsonBuilder();
+            builder.registerTypeAdapter(MyTargetTokenEntity.class, new MyTargetTokenDeserializer());
+            Gson gson = builder.create();
+            MyTargetTokenEntity entity = gson.fromJson(answer, MyTargetTokenEntity.class);
+            getHeadersMap().put("Authorization",
+                    String.format("%s %s", entity.getTokenType(), entity.getAccessToken()));
+            return entity;
+        } catch (IOException e) {
+            logger.debug(e.getMessage());
+        }
+        return null;
     }
 
     @Override
@@ -31,20 +53,4 @@ public class MyTarget extends BaseNetwork{
         return null;
     }
 
-    public String signEncoder(String requestMethod, String requestUrl, String requestBody){
-        String result = "";
-        try {
-            String signature = URLEncoder.encode(requestMethod, "UTF-8") + "&" + URLEncoder.encode(requestUrl, "UTF-8") + "&" + URLEncoder.encode(requestBody, "UTF-8");
-            Key signingKey = new SecretKeySpec("SSAipEtQb7vkNaEgmix5gIVll0cjP3eW7roj5uGJ5G04sEaVyRcOWxvPXhwHa5CBSoG4BgbTNGCw4ROMBIXTVePapdN3iWNNM2vvyU0geaKhtidXwkAsJNc8gF2X3dJmekKxNJGY8XtU6dEADkHRsMUIG4Gz4ovRdMVBfuMTF7G1z4QN1sJJLdybEUoyFnCyhrEifIDWygcsmKxHCWGpXzOqUFyg"
-                    .getBytes(), "HmacSHA1");
-            Mac mac = Mac.getInstance("HmacSHA1");
-            mac.init(signingKey);
-            byte[] rawHmac = mac.doFinal(signature.getBytes());
-            result = Base64.encodeBase64String(rawHmac);
-
-        } catch (UnsupportedEncodingException | NoSuchAlgorithmException | InvalidKeyException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
 }
