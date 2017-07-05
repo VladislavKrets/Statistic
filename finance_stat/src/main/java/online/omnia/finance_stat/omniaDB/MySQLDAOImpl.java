@@ -1,8 +1,10 @@
-package online.omnia.finance_now.omniaDB;
+package online.omnia.finance_stat.omniaDB;
 
-import online.omnia.finance_now.campaign.*;
-import online.omnia.finance_now.networks.BaseNetwork;
-import online.omnia.finance_now.utils.FinanceNow;
+import online.omnia.finance_stat.campaign.Account;
+import online.omnia.finance_stat.campaign.AccountEntity;
+import online.omnia.finance_stat.campaign.CheetahTokenEntity;
+import online.omnia.finance_stat.campaign.MyTargetTokenEntity;
+import online.omnia.finance_stat.utils.FinanceStat;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -22,7 +24,7 @@ public class MySQLDAOImpl implements MySQLDAO{
         configuration = new Configuration()
                 .addAnnotatedClass(Account.class)
                 .addAnnotatedClass(AccountEntity.class)
-                .addAnnotatedClass(FinanceNow.class)
+                .addAnnotatedClass(FinanceStat.class)
                 .addAnnotatedClass(CheetahTokenEntity.class)
                 .addAnnotatedClass(MyTargetTokenEntity.class)
                 .configure();
@@ -44,18 +46,18 @@ public class MySQLDAOImpl implements MySQLDAO{
     }
 
     @Override
-    public List<FinanceNow> getFinances() {
+    public List<FinanceStat> getFinances() {
         Session session = sessionFactory.openSession();
-        List<FinanceNow> finances = session.createQuery("select from FinanceNow", FinanceNow.class).list();
+        List<FinanceStat> finances = session.createQuery("select from FinanceStat", FinanceStat.class).list();
         session.close();
         return finances;
     }
 
     @Override
-    public void addFinance(FinanceNow financeNow) {
+    public void addFinance(FinanceStat financeStat) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        session.save(financeNow);
+        session.save(financeStat);
         session.beginTransaction().commit();
         session.close();
     }

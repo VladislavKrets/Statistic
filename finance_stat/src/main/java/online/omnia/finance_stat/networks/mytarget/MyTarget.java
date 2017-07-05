@@ -1,8 +1,8 @@
-package online.omnia.finance_now.networks.mytarget;
+package online.omnia.finance_stat.networks.mytarget;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import online.omnia.finance_now.networks.BaseNetwork;
+import online.omnia.finance_stat.networks.BaseNetwork;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.log4j.Logger;
@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by lollipop on 05.07.2017.
  */
-public class MyTarget extends BaseNetwork{
+public class MyTarget extends BaseNetwork {
     final static Logger logger = Logger.getLogger(MyTarget.class);
     public MyTarget(String baseURL) {
         super(baseURL);
