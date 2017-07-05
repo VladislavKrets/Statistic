@@ -53,6 +53,15 @@ public class MyTarget extends BaseNetwork{
 
     @Override
     public String getUserBalance() {
+        try {
+            String answer = methods().getMethod("user/account.json", getHeadersMap());
+            GsonBuilder builder = new GsonBuilder();
+            builder.registerTypeAdapter(String.class, new MyTargetUserBalanceDecerializer());
+            Gson gson = builder.create();
+            return gson.fromJson(answer, String.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
@@ -60,7 +69,10 @@ public class MyTarget extends BaseNetwork{
     public Integer getAccountId() {
         try {
             String answer = methods().getMethod("user.json", getHeadersMap());
-            System.out.println(answer);
+            GsonBuilder builder = new GsonBuilder();
+            builder.registerTypeAdapter(Integer.class, new MyTargetUserIdDeserializer());
+            Gson gson = builder.create();
+            return gson.fromJson(answer, Integer.class);
         } catch (IOException e) {
             logger.debug(e.getMessage());
         }
