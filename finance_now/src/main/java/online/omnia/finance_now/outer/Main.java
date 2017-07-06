@@ -1,9 +1,11 @@
 package online.omnia.finance_now.outer;
 
+import online.omnia.finance_now.campaign.Account;
 import online.omnia.finance_now.networks.BaseNetwork;
 import online.omnia.finance_now.networks.cheetah.CheetahAds;
 import online.omnia.finance_now.networks.mytarget.MyTarget;
 import online.omnia.finance_now.networks.mytarget.MyTargetTokenEntity;
+import online.omnia.finance_now.omniaDB.MySQLDAOImpl;
 import online.omnia.finance_now.utils.HttpMethodUtils;
 import online.omnia.finance_now.utils.Utils;
 
@@ -11,6 +13,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by lollipop on 03.07.2017.
@@ -29,11 +32,20 @@ public class Main {
         /*
         CheetahAds ads = new CheetahAds("https://api.ori.cmcm.com/");
         System.out.println(ads.getAccessToken("13256", "ae3a27715fb432f9ba036f163354e598"));*/
-        MyTarget target = new MyTarget("https://target.my.com/api/v2/");
-        /*MyTargetTokenEntity entity = target.getAccessToken("6qW93na1vpBBX9O7",
+        /*MyTarget target = new MyTarget("https://target.my.com/api/v2/");
+        MyTargetTokenEntity entity = target.getAccessToken("6qW93na1vpBBX9O7",
                 "SSAipEtQb7vkNaEgmix5gIVll0cjP3eW7roj5uGJ5G04sEaVyRcOWxvPXhwHa5CBSoG4BgbTNGCw4ROMBIXTVePapdN3iWNNM2vvyU0geaKhtidXwkAsJNc8gF2X3dJmekKxNJGY8XtU6dEADkHRsMUIG4Gz4ovRdMVBfuMTF7G1z4QN1sJJLdybEUoyFnCyhrEifIDWygcsmKxHCWGpXzOqUFyg");
-        System.out.println(entity.getAccessToken());*/
-        target.getUserBalance();
+        System.out.println(entity.getAccessToken());
+        target.getUserBalance();*/
+
+        MySQLDAOImpl mySQLDAO = MySQLDAOImpl.getInstance();
+        System.out.println("test");
+        List<Account> accounts = mySQLDAO.getAccounts();
+
+        System.out.println("sout: " + accounts.size());
+        for (Account account : accounts) {
+            System.out.println("sout: " + account);
+        }
     }
 
 }

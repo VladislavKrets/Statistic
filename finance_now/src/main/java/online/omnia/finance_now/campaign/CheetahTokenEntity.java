@@ -10,6 +10,7 @@ import java.util.Date;
 @Entity
 @Table(name = "cheetah_token")
 public class CheetahTokenEntity extends TokenEntity{
+
     public CheetahTokenEntity() {
     }
 

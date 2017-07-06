@@ -20,6 +20,8 @@ public abstract class BaseNetwork {
     public abstract String getUserBalance();
     public abstract Integer getAccountId();
     public abstract String getToken(String clientId, String clientKey);
+    public abstract String type();
+
     public String getCurrency() {
         return "USD";
     }
@@ -31,4 +33,6 @@ public abstract class BaseNetwork {
     public Map<String, String> getHeadersMap() {
         return headersMap;
     }
+
+
 }

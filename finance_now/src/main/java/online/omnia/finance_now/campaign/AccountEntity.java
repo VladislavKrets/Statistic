@@ -28,20 +28,22 @@ public class AccountEntity {
     @Column(name = "username", length = 50)
     private String userName;
     @Column(name = "type", length = 10)
-    private String type;
+    private int type;
     @Column(name = "password", length = 50)
     private String password;
     @Column(name = "api_URL", length = 1000)
-    private String apiURL;
-    @OneToOne
-    @JoinColumn(name = "idAccount")
+    private String apiURL;/*
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_account")*/
+    @Transient
     private Account account;
 
+    @Transient
     private TokenEntity tokenEntity;
     public AccountEntity() {
     }
 
-    public AccountEntity(int idAccount, String tokenTableName, String apiKey, String userName, String type, String password, String apiURL) {
+    public AccountEntity(int idAccount, Account account, String tokenTableName, String apiKey, String userName, int type, String password, String apiURL) {
         this.idAccount = idAccount;
         this.tokenTableName = tokenTableName;
         this.apiKey = apiKey;
@@ -49,6 +51,7 @@ public class AccountEntity {
         this.type = type;
         this.password = password;
         this.apiURL = apiURL;
+        this.account = account;
     }
 
     public TokenEntity getTokenEntity() {
@@ -91,7 +94,7 @@ public class AccountEntity {
         return userName;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 

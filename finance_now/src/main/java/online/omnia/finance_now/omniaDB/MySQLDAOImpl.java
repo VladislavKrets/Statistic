@@ -7,6 +7,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,8 +35,15 @@ public class MySQLDAOImpl implements MySQLDAO{
     @Override
     public List<Account> getAccounts() {
         Session session = sessionFactory.openSession();
-        List<Account> accounts = session.createQuery("select from Account", Account.class).list();
+        Query query = session.createQuery("from Account", Account.class);
+
+        System.out.println("Started");
+
+        List<Account> accounts = query.getResultList();
+
         session.close();
+
+        System.out.println("Exit");
         return accounts;
     }
     @Override
@@ -46,7 +55,7 @@ public class MySQLDAOImpl implements MySQLDAO{
     @Override
     public List<FinanceNow> getFinances() {
         Session session = sessionFactory.openSession();
-        List<FinanceNow> finances = session.createQuery("select from FinanceNow", FinanceNow.class).list();
+        List<FinanceNow> finances = session.createQuery("from FinanceNow", FinanceNow.class).list();
         session.close();
         return finances;
     }

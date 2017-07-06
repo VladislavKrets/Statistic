@@ -9,6 +9,7 @@ import java.util.Date;
 @Entity
 @Table(name = "mt_token")
 public class MyTargetTokenEntity extends TokenEntity{
+
     public MyTargetTokenEntity() {
     }
 

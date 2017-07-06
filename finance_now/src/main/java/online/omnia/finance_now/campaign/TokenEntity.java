@@ -6,6 +6,7 @@ import java.util.Date;
 /**
  * Created by lollipop on 05.07.2017.
  */
+@MappedSuperclass
 public abstract class TokenEntity {
     @Id
     @Column(name = "id_account", length = 11)

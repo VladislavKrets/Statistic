@@ -50,6 +50,11 @@ public class CheetahAds extends BaseNetwork{
     }
 
     @Override
+    public String type() {
+        return "cheetahads";
+    }
+
+    @Override
     public String getUserBalance() {
         try {
             String answer = methods().getMethod("user/balance", getHeadersMap());

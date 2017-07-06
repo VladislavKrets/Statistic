@@ -52,6 +52,11 @@ public class MyTarget extends BaseNetwork{
     }
 
     @Override
+    public String type() {
+        return "mytarget";
+    }
+
+    @Override
     public String getUserBalance() {
         try {
             String answer = methods().getMethod("user/account.json", getHeadersMap());

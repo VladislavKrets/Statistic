@@ -13,15 +13,17 @@ public class Account {
     private int idAccount;
     @Column(name = "name_account", length = 200)
     private String nameAccount;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "account")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_account")
     private AccountEntity accountEntity;
 
     public Account() {
     }
 
-    public Account(int idAccount, String nameAccount) {
+    public Account(int idAccount, String nameAccount, AccountEntity entity) {
         this.idAccount = idAccount;
         this.nameAccount = nameAccount;
+        this.accountEntity = entity;
     }
 
     public int getIdAccount() {
@@ -34,5 +36,14 @@ public class Account {
 
     public AccountEntity getAccountEntity() {
         return accountEntity;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "idAccount=" + idAccount +
+                ", nameAccount='" + nameAccount + '\'' +
+                ", accountEntity=" + accountEntity +
+                '}';
     }
 }
