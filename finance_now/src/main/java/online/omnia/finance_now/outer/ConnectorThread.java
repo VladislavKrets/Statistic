@@ -33,8 +33,14 @@ public class ConnectorThread implements Runnable{
         else if (network instanceof CheetahAds){
          TokenAdder.tokenChangeCheetah((CheetahAds) network);
         }
-        FinanceNow financeNow = new FinanceNow(network.getAccountId(), new Date(),
-                Double.parseDouble(network.getUserBalance()), network.getCurrency());
+        Integer accountId = network.getAccountId();
+        System.out.println(accountId);
+        Date date = new Date();
+        System.out.println(date);
+        Double balance = network.getUserBalance();
+        String currency = network.getCurrency();
+        FinanceNow financeNow = new FinanceNow(accountId, date,
+                balance, currency);
         mySQLDAO.addFinance(financeNow);
         System.out.println("Added to finance_2");
         countDownLatch.countDown();

@@ -98,11 +98,11 @@ public class MySQLDAOImpl implements MySQLDAO{
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.save(financeNow);
-        session.beginTransaction().commit();
+        session.getTransaction().commit();
         session.close();
     }
 
-    public static synchronized MySQLDAOImpl getInstance() {
+    public static MySQLDAOImpl getInstance() {
         if (mySQLDAO == null) mySQLDAO = new MySQLDAOImpl();
         return mySQLDAO;
     }

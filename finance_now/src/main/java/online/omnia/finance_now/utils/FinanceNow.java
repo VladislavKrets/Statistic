@@ -12,7 +12,7 @@ public class FinanceNow {
     @Id
     @Column(name = "id_finance_2", length = 11)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int idFinanceStat;
+    private int idFinanceNow;
     @Column(name = "account_id", length = 11)
     private int idAccount;
     @Column(name = "date", columnDefinition = "DATETIME")
@@ -33,8 +33,8 @@ public class FinanceNow {
         this.currency = currency;
     }
 
-    public int getIdFinanceStat() {
-        return idFinanceStat;
+    public int getIdFinanceNow() {
+        return idFinanceNow;
     }
 
     public int getIdAccount() {

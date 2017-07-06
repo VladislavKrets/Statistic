@@ -7,6 +7,7 @@ import online.omnia.finance_now.networks.cheetah.CheetahTokenEntity;
 import online.omnia.finance_now.networks.mytarget.MyTarget;
 import online.omnia.finance_now.networks.mytarget.MyTargetTokenEntity;
 import online.omnia.finance_now.omniaDB.MySQLDAOImpl;
+import online.omnia.finance_now.utils.FinanceNow;
 import online.omnia.finance_now.utils.HttpMethodUtils;
 import online.omnia.finance_now.utils.Utils;
 
@@ -41,10 +42,24 @@ public class Main {
         target.getUserBalance();*/
         Broker broker = new Broker();
         broker.collect();
-        /*MyTarget target = new MyTarget("https://target.my.com/api/v2/", "6qW93na1vpBBX9O7",
+       /* MySQLDAOImpl mySQLDAO = MySQLDAOImpl.getInstance();
+        MyTarget network = new MyTarget("https://target.my.com/api/v2/", "6qW93na1vpBBX9O7",
                 "SSAipEtQb7vkNaEgmix5gIVll0cjP3eW7roj5uGJ5G04sEaVyRcOWxvPXhwHa5CBSoG4BgbTNGCw4ROMBIXTVePapdN3iWNNM2vvyU0geaKhtidXwkAsJNc8gF2X3dJmekKxNJGY8XtU6dEADkHRsMUIG4Gz4ovRdMVBfuMTF7G1z4QN1sJJLdybEUoyFnCyhrEifIDWygcsmKxHCWGpXzOqUFyg");
-        System.out.println(target.updateToken());*//*
-*/
+        network.updateToken();
+        Integer accountId = network.getAccountId();
+        System.out.println(accountId);
+        Date date = new Date();
+        System.out.println(date);
+        Double balance = network.getUserBalance();
+        String currency = network.getCurrency();
+        FinanceNow financeNow = new FinanceNow(accountId, date,
+                balance, currency);
+        mySQLDAO.addFinance(financeNow);*/
+        /*CheetahAds ads = new CheetahAds("https://api.ori.cmcm.com/", "13256", "ae3a27715fb432f9ba036f163354e598");
+        ads.updateToken();
+        System.out.println(ads.getUserBalance());
+        System.out.println(ads.getAccountId());
+        System.out.println(ads.getCurrency());*/
     }
 
 }

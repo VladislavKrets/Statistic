@@ -21,7 +21,7 @@ public abstract class BaseNetwork {
         this.clientCredentials = clientCredentials;
 
     }
-    public abstract String getUserBalance();
+    public abstract Double getUserBalance();
     public abstract Object updateToken();
     public abstract Integer getAccountId();
     public abstract String getCurrentToken();

@@ -54,13 +54,13 @@ public class CheetahAds extends BaseNetwork{
     }
 
     @Override
-    public String getUserBalance() {
+    public Double getUserBalance() {
         try {
             String answer = methods().getMethod("user/balance", getHeadersMap());
             GsonBuilder builder = new GsonBuilder();
-            builder.registerTypeAdapter(String.class, new CheetahAdsUserBalanceDeserializer());
+            builder.registerTypeAdapter(Double.class, new CheetahAdsUserBalanceDeserializer());
             Gson gson = builder.create();
-            return gson.fromJson(answer, String.class);
+            return gson.fromJson(answer, Double.class);
         } catch (IOException e) {
             logger.debug(e.getMessage());
         }

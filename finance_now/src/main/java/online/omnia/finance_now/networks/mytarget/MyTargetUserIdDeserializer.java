@@ -17,6 +17,7 @@ public class MyTargetUserIdDeserializer implements JsonDeserializer<Integer>{
         try {
             JsonObject object = jsonElement.getAsJsonObject();
             id = object.get("id").getAsInt();
+
         } catch (Exception e) {
             logger.debug(e.getMessage());
         }

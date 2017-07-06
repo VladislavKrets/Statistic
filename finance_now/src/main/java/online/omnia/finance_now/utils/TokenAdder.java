@@ -36,7 +36,9 @@ public class TokenAdder {
                     entity.setTimeRenew(new Date(currentDate.getTime() + myTargetTokenEntity.getExpiresIn()));
                     mySQLDAO.updateMytargetToken(entity);
                 }
-                return;
+                else {
+
+                }
             }
         }
         online.omnia.finance_now.networks.mytarget.MyTargetTokenEntity myTargetTokenEntity =

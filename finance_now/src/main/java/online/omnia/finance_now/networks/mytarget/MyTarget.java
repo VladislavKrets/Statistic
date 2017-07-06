@@ -65,13 +65,13 @@ public class MyTarget extends BaseNetwork{
     }
 
     @Override
-    public String getUserBalance() {
+    public Double getUserBalance() {
         try {
             String answer = methods().getMethod("user/account.json", getHeadersMap());
             GsonBuilder builder = new GsonBuilder();
-            builder.registerTypeAdapter(String.class, new MyTargetUserBalanceDecerializer());
+            builder.registerTypeAdapter(Double.class, new MyTargetUserBalanceDecerializer());
             Gson gson = builder.create();
-            return gson.fromJson(answer, String.class);
+            return gson.fromJson(answer, Double.class);
         } catch (IOException e) {
             e.printStackTrace();
         }

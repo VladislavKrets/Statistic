@@ -20,7 +20,7 @@ public class CheetahAdsUserIdDeserializer implements JsonDeserializer<Integer>{
         logger.debug(String.format("Status=%s Message=%s", (status.equals("200") ? "9999" : status), message));
 
         if (status.equals("200")) {
-            Integer id = userObject.get("id").getAsInt();
+            Integer id = userObject.get("data").getAsJsonObject().get("id").getAsInt();
             return id;
         }
         return -1;
