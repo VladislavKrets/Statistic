@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class MyTarget extends BaseNetwork{
     final static Logger logger = Logger.getLogger(MyTarget.class);
-    private String refreshToken;
+    private String refreshToken = "vmtYJVtfR6bX3kp6g9KTlOVy3gm5IWtxfk1pSOZDWixlPAeztwDb5kbB6aEI45qQ5LEf0XXTeYNlvGqHCwzuSsqG0KbW9FUFMzzRUArjbSUfqz00a9eBG9I24JGLoiR6YYhXWzwyj6FHQvNeTlAkt5hPBvIFpNRZuaUGGiM5GHcmTwbZNXmWu4pAQfqZATDr6FzQCjVxQUm53vCPH3ONiwkxhyQpaKJEWozQEMOCl6J5qmUfJ1";
     public MyTarget(String baseURL, String clientId, String clientCredentials) {
         super(baseURL, clientId, clientCredentials);
         getHeadersMap().put("Content-Type", "application/x-www-form-urlencoded");
