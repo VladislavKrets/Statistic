@@ -3,8 +3,10 @@ package online.omnia.finance_now.outer;
 import online.omnia.finance_now.campaign.Account;
 import online.omnia.finance_now.networks.BaseNetwork;
 import online.omnia.finance_now.networks.cheetah.CheetahAds;
+import online.omnia.finance_now.networks.mytarget.MyTarget;
 import online.omnia.finance_now.omniaDB.MySQLDAOImpl;
 import online.omnia.finance_now.utils.FinanceNow;
+import online.omnia.finance_now.utils.TokenAdder;
 
 import java.util.Date;
 import java.util.concurrent.CountDownLatch;
@@ -25,7 +27,8 @@ public class ConnectorThread implements Runnable{
 
     @Override
     public void run() {
-
+        if (network instanceof MyTarget) TokenAdder.tokenChangeMT((MyTarget) network);
+        else if (network instanceof CheetahAds) TokenAdder.tokenChangeCheetah((CheetahAds) network);
         FinanceNow financeNow = new FinanceNow(network.getAccountId(), new Date(),
                 Double.parseDouble(network.getUserBalance()), network.getCurrency());
         mySQLDAO.addFinance(financeNow);

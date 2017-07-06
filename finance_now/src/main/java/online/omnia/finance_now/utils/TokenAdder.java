@@ -1,6 +1,5 @@
 package online.omnia.finance_now.utils;
 
-import online.omnia.finance_now.campaign.Account;
 import online.omnia.finance_now.campaign.CheetahTokenEntity;
 import online.omnia.finance_now.campaign.MyTargetTokenEntity;
 import online.omnia.finance_now.networks.cheetah.CheetahAds;
@@ -14,15 +13,15 @@ import java.util.List;
  * Created by lollipop on 06.07.2017.
  */
 public class TokenAdder {
-    private MySQLDAOImpl mySQLDAO;
-    private Date currentDate;
+    private static MySQLDAOImpl mySQLDAO;
+    private static Date currentDate;
 
-    public TokenAdder() {
+    static {
         mySQLDAO = MySQLDAOImpl.getInstance();
         currentDate = new Date();
     }
 
-    public void tokenChangeMT(MyTarget myTarget) {
+    public static void tokenChangeMT(MyTarget myTarget) {
         List<MyTargetTokenEntity> tokens = mySQLDAO.getMyTargetTokens();
         for (MyTargetTokenEntity entity : tokens) {
             if (entity.getToken().equals(myTarget.getCurrentToken())) {
@@ -51,7 +50,7 @@ public class TokenAdder {
         entity.setRefreshToken(myTargetTokenEntity.getRefreshToken());
         mySQLDAO.addToken(entity);
     }
-    public void tokenChangeCheetah(CheetahAds cheetAh) {
+    public static void tokenChangeCheetah(CheetahAds cheetAh) {
         List<CheetahTokenEntity> tokens = mySQLDAO.getCheetahTokens();
         for (CheetahTokenEntity entity : tokens) {
             if (entity.getToken().equals(cheetAh.getCurrentToken())) {
