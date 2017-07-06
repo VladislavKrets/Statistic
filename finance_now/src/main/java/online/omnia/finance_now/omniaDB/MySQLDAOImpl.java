@@ -23,7 +23,6 @@ public class MySQLDAOImpl implements MySQLDAO{
     static {
         configuration = new Configuration()
                 .addAnnotatedClass(Account.class)
-                .addAnnotatedClass(AccountEntity.class)
                 .addAnnotatedClass(FinanceNow.class)
                 .addAnnotatedClass(CheetahTokenEntity.class)
                 .addAnnotatedClass(MyTargetTokenEntity.class)
@@ -36,20 +35,39 @@ public class MySQLDAOImpl implements MySQLDAO{
     public List<Account> getAccounts() {
         Session session = sessionFactory.openSession();
         Query query = session.createQuery("from Account", Account.class);
-
-        System.out.println("Started");
-
         List<Account> accounts = query.getResultList();
-
         session.close();
-
-        System.out.println("Exit");
         return accounts;
     }
-    @Override
-    public Account getAccountByName(String name) {
 
-        return null;
+    public List<MyTargetTokenEntity> getMyTargetTokens() {
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("from MyTargetTokenEntity", MyTargetTokenEntity.class);
+        List<MyTargetTokenEntity> tokens = query.getResultList();
+        return tokens;
+    }
+
+    public void addToken(TokenEntity entity) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.save(entity);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    public List<CheetahTokenEntity> getCheetahTokens() {
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("from CheetahTokenEntity", CheetahTokenEntity.class);
+        List<CheetahTokenEntity> tokens = query.getResultList();
+        return tokens;
+    }
+
+    public void updateToken(TokenEntity entity) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.update(entity);
+        session.getTransaction().commit();
+        session.close();
     }
 
     @Override

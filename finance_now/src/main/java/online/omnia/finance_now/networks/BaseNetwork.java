@@ -11,15 +11,20 @@ import java.util.Map;
 public abstract class BaseNetwork {
     private HttpMethodUtils methods;
     private Map<String, String> headersMap;
+    private String clientId;
+    private String clientCredentials;
 
-    public BaseNetwork(String baseURL) {
+    public BaseNetwork(String baseURL, String clientId, String clientCredentials) {
         methods = new HttpMethodUtils(baseURL);
         headersMap = new HashMap<String, String>();
+        this.clientId = clientId;
+        this.clientCredentials = clientCredentials;
 
     }
     public abstract String getUserBalance();
+    public abstract Object updateToken();
     public abstract Integer getAccountId();
-    public abstract String getToken(String clientId, String clientKey);
+    public abstract String getCurrentToken();
     public abstract String type();
 
     public String getCurrency() {
@@ -34,5 +39,11 @@ public abstract class BaseNetwork {
         return headersMap;
     }
 
+    public String getClientId() {
+        return clientId;
+    }
 
+    public String getClientCredentials() {
+        return clientCredentials;
+    }
 }

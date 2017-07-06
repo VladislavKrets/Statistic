@@ -18,18 +18,17 @@ public class CheetahAds extends BaseNetwork{
 
     final static Logger logger = Logger.getLogger(CheetahAds.class);
 
-    public CheetahAds(String baseURL) {
-        super(baseURL);
+    public CheetahAds(String baseURL, String clientId, String clientCredentials) {
+        super(baseURL, clientId, clientCredentials);
         getHeadersMap().put("Accept", "application/json,application/x.orion.v1+json");
-        //getHeadersMap().put("Authorization", "Bearer " + tokenKey);
 
     }
-    public CheetahTokenEntity getAccessToken(String clientId, String clientCredential){
+    public CheetahTokenEntity updateToken(){
         try {
             List<NameValuePair> nameValuePairList = new ArrayList<>();
             nameValuePairList.add(new BasicNameValuePair("grant_type", "client_credentials"));
-            nameValuePairList.add(new BasicNameValuePair("client_id", clientId));
-            nameValuePairList.add(new BasicNameValuePair("client_secret", clientCredential));
+            nameValuePairList.add(new BasicNameValuePair("client_id", getClientId()));
+            nameValuePairList.add(new BasicNameValuePair("client_secret", getClientCredentials()));
             String answer = methods().postMethod("oauth/access_token", nameValuePairList, getHeadersMap());
             GsonBuilder builder = new GsonBuilder();
             builder.registerTypeAdapter(CheetahTokenEntity.class, new CheetahAdsTokenDeserializer());
@@ -44,9 +43,9 @@ public class CheetahAds extends BaseNetwork{
     }
 
     @Override
-    public String getToken(String clientId, String clientKey) {
+    public String getCurrentToken() {
         if (getHeadersMap().containsKey("Authorization")) return getHeadersMap().get("Authorization");
-        return getAccessToken(clientId, clientKey).getAccessToken();
+        return null;
     }
 
     @Override

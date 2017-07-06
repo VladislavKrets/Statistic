@@ -3,6 +3,7 @@ package online.omnia.finance_now.outer;
 import online.omnia.finance_now.campaign.Account;
 import online.omnia.finance_now.networks.BaseNetwork;
 import online.omnia.finance_now.networks.cheetah.CheetahAds;
+import online.omnia.finance_now.networks.cheetah.CheetahTokenEntity;
 import online.omnia.finance_now.networks.mytarget.MyTarget;
 import online.omnia.finance_now.networks.mytarget.MyTargetTokenEntity;
 import online.omnia.finance_now.omniaDB.MySQLDAOImpl;
@@ -12,6 +13,7 @@ import online.omnia.finance_now.utils.Utils;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,14 +40,6 @@ public class Main {
         System.out.println(entity.getAccessToken());
         target.getUserBalance();*/
 
-        MySQLDAOImpl mySQLDAO = MySQLDAOImpl.getInstance();
-        System.out.println("test");
-        List<Account> accounts = mySQLDAO.getAccounts();
-
-        System.out.println("sout: " + accounts.size());
-        for (Account account : accounts) {
-            System.out.println("sout: " + account);
-        }
     }
 
 }

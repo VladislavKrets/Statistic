@@ -10,7 +10,6 @@ import java.util.List;
  */
 public interface MySQLDAO {
     List<Account> getAccounts();
-    Account getAccountByName(String name);
     List<FinanceNow> getFinances();
     void addFinance(FinanceNow financeNow);
 

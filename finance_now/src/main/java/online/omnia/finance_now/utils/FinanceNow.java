@@ -13,7 +13,7 @@ public class FinanceNow {
     @Column(name = "id_finance_2", length = 11)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int idFinanceStat;
-    @Column(name = "id_account", length = 11)
+    @Column(name = "account_id", length = 11)
     private int idAccount;
     @Column(name = "date", columnDefinition = "DATETIME")
     @Temporal(value = TemporalType.TIMESTAMP)

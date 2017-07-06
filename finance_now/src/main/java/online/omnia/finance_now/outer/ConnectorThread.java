@@ -7,7 +7,6 @@ import online.omnia.finance_now.omniaDB.MySQLDAOImpl;
 import online.omnia.finance_now.utils.FinanceNow;
 
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -17,12 +16,10 @@ public class ConnectorThread implements Runnable{
     private CountDownLatch countDownLatch;
     private MySQLDAOImpl mySQLDAO;
     private BaseNetwork network;
-    private List<Account> accounts;
 
-    public ConnectorThread(CountDownLatch countDownLatch, BaseNetwork network, List<Account> accounts) {
+    public ConnectorThread(CountDownLatch countDownLatch, BaseNetwork network) {
         this.countDownLatch = countDownLatch;
         this.network = network;
-        this.accounts = accounts;
         mySQLDAO = MySQLDAOImpl.getInstance();
     }
 

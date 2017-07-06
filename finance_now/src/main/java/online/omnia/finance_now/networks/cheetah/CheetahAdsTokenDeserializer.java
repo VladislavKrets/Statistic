@@ -4,6 +4,7 @@ import com.google.gson.*;
 import org.apache.log4j.Logger;
 
 import java.lang.reflect.Type;
+import java.util.Date;
 
 /**
  * Created by lollipop on 05.07.2017.
@@ -23,7 +24,7 @@ public class CheetahAdsTokenDeserializer implements JsonDeserializer<CheetahToke
             CheetahTokenEntity entity = new CheetahTokenEntity(
                     object.get("data").getAsJsonObject().get("access_token").getAsString(),
                     object.get("data").getAsJsonObject().get("token_type").getAsString(),
-                    object.get("data").getAsJsonObject().get("expires_in").getAsString()
+                    object.get("data").getAsJsonObject().get("expires_in").getAsInt() * 1000L
             );
             return entity;
         }

@@ -18,19 +18,25 @@ import java.util.List;
  */
 public class MyTarget extends BaseNetwork{
     final static Logger logger = Logger.getLogger(MyTarget.class);
-    public MyTarget(String baseURL) {
-        super(baseURL);
+    private String refreshToken;
+    public MyTarget(String baseURL, String clientId, String clientCredentials) {
+        super(baseURL, clientId, clientCredentials);
         getHeadersMap().put("Content-Type", "application/x-www-form-urlencoded");
         getHeadersMap().put("Authorization", "Bearer AfknWkWlUUBaCwdVe9PW9KukpFeW2u2DDNdUqmU03DkiY1iYD48ByxM8oaIB2dOX2TJctp1Ms79gFx9jRUUkOg7tdCrs0UmYKP3XtbfFULaFFxKR3q6znqirFXySXIEHN7sMaH3RMmsVdV2T7RY0msdk9mjFQ48t7DFfvEcacHape3OuRzYxqU0zvmSkfhpG8NlcU5guonhiY4eQycy3r9PfQKxfqZ0tdGJxI7I1SeMLQ");
 
     }
 
-    public MyTargetTokenEntity getAccessToken(String clientId, String clientSecret) {
+    public MyTargetTokenEntity updateToken() {
         try {
             List<NameValuePair> nameValuePairList = new ArrayList<>();
             nameValuePairList.add(new BasicNameValuePair("grant_type", "client_credentials"));
-            nameValuePairList.add(new BasicNameValuePair("client_id", clientId));
-            nameValuePairList.add(new BasicNameValuePair("client_secret", clientSecret));
+            if (refreshToken != null) {
+                nameValuePairList.add(new BasicNameValuePair("grant_type", "refresh_token"));
+                nameValuePairList.add(new BasicNameValuePair("refresh_token", refreshToken));
+            }
+
+            nameValuePairList.add(new BasicNameValuePair("client_id", getClientId()));
+            nameValuePairList.add(new BasicNameValuePair("client_secret", getClientCredentials()));
             String answer = methods().postMethod("oauth2/token.json", nameValuePairList, getHeadersMap());
             GsonBuilder builder = new GsonBuilder();
             builder.registerTypeAdapter(MyTargetTokenEntity.class, new MyTargetTokenDeserializer());
@@ -38,6 +44,8 @@ public class MyTarget extends BaseNetwork{
             MyTargetTokenEntity entity = gson.fromJson(answer, MyTargetTokenEntity.class);
             getHeadersMap().put("Authorization",
                     String.format("%s %s", entity.getTokenType(), entity.getAccessToken()));
+            refreshToken = entity.getRefreshToken();
+            logger.debug("Refresh token: " + refreshToken);
             return entity;
         } catch (IOException e) {
             logger.debug(e.getMessage());
@@ -46,9 +54,9 @@ public class MyTarget extends BaseNetwork{
     }
 
     @Override
-    public String getToken(String clientId, String clientKey) {
+    public String getCurrentToken() {
         if (getHeadersMap().containsKey("Authorization")) return getHeadersMap().get("Authorization");
-        return getAccessToken(clientId, clientKey).getAccessToken();
+        return null;
     }
 
     @Override
