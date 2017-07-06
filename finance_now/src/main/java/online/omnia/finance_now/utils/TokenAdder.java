@@ -34,7 +34,7 @@ public class TokenAdder {
                     entity.setTimeCreate(currentDate);
 
                     entity.setTimeRenew(new Date(currentDate.getTime() + myTargetTokenEntity.getExpiresIn()));
-                    mySQLDAO.updateToken(entity);
+                    mySQLDAO.updateMytargetToken(entity);
                 }
                 return;
             }
@@ -48,7 +48,7 @@ public class TokenAdder {
         entity.setTimeExpired(new Date(myTargetTokenEntity.getExpiresIn()));
         entity.setTimeRenew(new Date(currentDate.getTime() + myTargetTokenEntity.getExpiresIn()));
         entity.setRefreshToken(myTargetTokenEntity.getRefreshToken());
-        mySQLDAO.addToken(entity);
+        mySQLDAO.addMyTargetToken(entity);
     }
     public static void tokenChangeCheetah(CheetahAds cheetAh) {
         List<CheetahTokenEntity> tokens = mySQLDAO.getCheetahTokens();
@@ -63,19 +63,19 @@ public class TokenAdder {
                     entity.setTimeCreate(currentDate);
 
                     entity.setTimeRenew(new Date(currentDate.getTime() + cheetahTokenEntity.getExpiresIn()));
-                    mySQLDAO.updateToken(entity);
+                    mySQLDAO.updateCheetahToken(entity);
                 }
                 return;
             }
         }
         online.omnia.finance_now.networks.cheetah.CheetahTokenEntity cheetahTokenEntity =
                 cheetAh.updateToken();
-        MyTargetTokenEntity entity = new MyTargetTokenEntity();
+        CheetahTokenEntity entity = new CheetahTokenEntity();
         entity.setTokenType(cheetahTokenEntity.getTokenType());
         entity.setToken(cheetahTokenEntity.getAccessToken());
         entity.setTimeCreate(currentDate);
         entity.setTimeExpired(new Date(cheetahTokenEntity.getExpiresIn()));
         entity.setTimeRenew(new Date(currentDate.getTime() + cheetahTokenEntity.getExpiresIn()));
-        mySQLDAO.addToken(entity);
+        mySQLDAO.addCheetahToken(entity);
     }
 }

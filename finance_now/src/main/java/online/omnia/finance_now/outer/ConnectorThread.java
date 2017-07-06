@@ -27,11 +27,16 @@ public class ConnectorThread implements Runnable{
 
     @Override
     public void run() {
-        if (network instanceof MyTarget) TokenAdder.tokenChangeMT((MyTarget) network);
-        else if (network instanceof CheetahAds) TokenAdder.tokenChangeCheetah((CheetahAds) network);
+        if (network instanceof MyTarget){
+            TokenAdder.tokenChangeMT((MyTarget) network);
+        }
+        else if (network instanceof CheetahAds){
+         TokenAdder.tokenChangeCheetah((CheetahAds) network);
+        }
         FinanceNow financeNow = new FinanceNow(network.getAccountId(), new Date(),
                 Double.parseDouble(network.getUserBalance()), network.getCurrency());
         mySQLDAO.addFinance(financeNow);
+        System.out.println("Added to finance_2");
         countDownLatch.countDown();
     }
 }

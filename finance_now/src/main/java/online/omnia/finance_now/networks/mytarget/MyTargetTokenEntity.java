@@ -10,12 +10,11 @@ public class MyTargetTokenEntity {
     private String refreshToken;
     private int tokens_left;
 
-    public MyTargetTokenEntity(String accessToken, String tokenType, long expiresIn, String refreshToken, int tokens_left) {
+    public MyTargetTokenEntity(String accessToken, String tokenType, long expiresIn, String refreshToken) {
         this.accessToken = accessToken;
         this.tokenType = tokenType;
         this.expiresIn = expiresIn;
         this.refreshToken = refreshToken;
-        this.tokens_left = tokens_left;
     }
 
     public String getAccessToken() {

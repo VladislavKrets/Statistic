@@ -47,7 +47,15 @@ public class MySQLDAOImpl implements MySQLDAO{
         return tokens;
     }
 
-    public void addToken(TokenEntity entity) {
+    public void addMyTargetToken(MyTargetTokenEntity entity) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.save(entity);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    public void addCheetahToken(CheetahTokenEntity entity) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.save(entity);
@@ -62,7 +70,7 @@ public class MySQLDAOImpl implements MySQLDAO{
         return tokens;
     }
 
-    public void updateToken(TokenEntity entity) {
+    public void updateMytargetToken(MyTargetTokenEntity entity) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.update(entity);
@@ -70,6 +78,13 @@ public class MySQLDAOImpl implements MySQLDAO{
         session.close();
     }
 
+    public void updateCheetahToken(CheetahTokenEntity entity) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.update(entity);
+        session.getTransaction().commit();
+        session.close();
+    }
     @Override
     public List<FinanceNow> getFinances() {
         Session session = sessionFactory.openSession();

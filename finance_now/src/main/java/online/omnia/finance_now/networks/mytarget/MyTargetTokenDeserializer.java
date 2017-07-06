@@ -20,11 +20,11 @@ public class MyTargetTokenDeserializer implements JsonDeserializer<MyTargetToken
                     object.get("access_token").getAsString(),
                     object.get("token_type").getAsString(),
                     object.get("expires_in").getAsInt() * 1000L,
-                    object.get("refresh_token").getAsString(),
-                    object.get("tokens_left").getAsInt()
+                    object.get("refresh_token").getAsString()
             );
             return entity;
         } catch (Exception e) {
+
             logger.debug(e.getMessage());
         }
         return null;
