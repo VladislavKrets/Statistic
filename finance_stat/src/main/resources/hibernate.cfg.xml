@@ -1,13 +1,13 @@
 <hibernate-configuration>
 
     <session-factory>
-        <property name="connection.url">jdbc:mysql://vpn.server.omni-a.com/OM_finance
+        <property name="connection.url">jdbc:mysql://vpn.server.omni-a.com/OM_finance/
         </property>
         <property name="connection.driver_class">com.mysql.jdbc.Driver
         </property>
         <property name="connection.username">TEST</property>
         <property name="connection.password">C2nCJBA0</property>
-       <!-- <property name="connection.url">jdbc:mysql://127.0.0.1/test
+        <!--<property name="connection.url">jdbc:mysql://127.0.0.1/test
         </property>
         <property name="connection.driver_class">com.mysql.jdbc.Driver
         </property>
