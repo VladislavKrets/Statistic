@@ -1,7 +1,7 @@
 <hibernate-configuration>
 
     <session-factory>
-        <property name="connection.url">jdbc:mysql://vpn.server.omni-a.com/OM_finance
+        <property name="connection.url">jdbc:mysql://vpn.server.omni-a.com/OM_sources
         </property>
         <property name="connection.driver_class">com.mysql.jdbc.Driver
         </property>

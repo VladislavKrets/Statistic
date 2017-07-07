@@ -9,6 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import javax.persistence.LockModeType;
 import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +76,7 @@ public class MySQLDAOImpl implements MySQLDAO{
     public synchronized void updateMytargetToken(MyTargetTokenEntity entity) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        session.lock(entity, LockMode.UPGRADE_NOWAIT);
+        session.lock(entity, LockModeType.PESSIMISTIC_WRITE);
         session.update(entity);
         session.getTransaction().commit();
         session.close();
@@ -84,7 +85,7 @@ public class MySQLDAOImpl implements MySQLDAO{
     public synchronized void updateCheetahToken(CheetahTokenEntity entity) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        session.lock(entity, LockMode.UPGRADE_NOWAIT);
+        session.lock(entity, LockModeType.PESSIMISTIC_WRITE);
         session.update(entity);
         session.getTransaction().commit();
         session.close();
