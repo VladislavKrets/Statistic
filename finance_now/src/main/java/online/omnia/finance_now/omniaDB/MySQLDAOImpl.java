@@ -72,7 +72,7 @@ public class MySQLDAOImpl implements MySQLDAO{
         return tokens;
     }
 
-    public void updateMytargetToken(MyTargetTokenEntity entity) {
+    public synchronized void updateMytargetToken(MyTargetTokenEntity entity) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.lock(entity, LockMode.UPGRADE_NOWAIT);
@@ -81,7 +81,7 @@ public class MySQLDAOImpl implements MySQLDAO{
         session.close();
     }
 
-    public void updateCheetahToken(CheetahTokenEntity entity) {
+    public synchronized void updateCheetahToken(CheetahTokenEntity entity) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.lock(entity, LockMode.UPGRADE_NOWAIT);

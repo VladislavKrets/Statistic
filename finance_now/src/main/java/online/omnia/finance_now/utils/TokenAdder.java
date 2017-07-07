@@ -5,9 +5,13 @@ import online.omnia.finance_now.campaign.MyTargetTokenEntity;
 import online.omnia.finance_now.networks.cheetah.CheetahAds;
 import online.omnia.finance_now.networks.mytarget.MyTarget;
 import online.omnia.finance_now.omniaDB.MySQLDAOImpl;
+import org.apache.log4j.Logger;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 /**
  * Created by lollipop on 06.07.2017.
@@ -15,10 +19,20 @@ import java.util.List;
 public class TokenAdder {
     private static MySQLDAOImpl mySQLDAO;
     private static Date currentDate;
+    private static SimpleDateFormat dateFormat;
+    final static Logger logger;
 
     static {
+        logger = Logger.getLogger(TokenAdder.class);
         mySQLDAO = MySQLDAOImpl.getInstance();
         currentDate = new Date();
+        dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        try {
+            currentDate = dateFormat.parse(dateFormat.format(currentDate));
+        } catch (ParseException e) {
+            logger.debug(e.getMessage());
+        }
     }
 
     public static void tokenChangeMT(MyTarget myTarget) {
@@ -30,10 +44,19 @@ public class TokenAdder {
                             myTarget.updateToken();
                     entity.setToken(myTargetTokenEntity.getAccessToken());
                     entity.setTokenType(myTargetTokenEntity.getTokenType());
-                    entity.setTimeExpired(new Date(myTargetTokenEntity.getExpiresIn()));
+                    try {
+                        entity.setTimeExpired(dateFormat.parse(dateFormat.format(new Date(myTargetTokenEntity.getExpiresIn()))));
+                    } catch (ParseException e) {
+                        logger.debug(e.getMessage());
+                    }
                     entity.setTimeCreate(currentDate);
 
-                    entity.setTimeRenew(new Date(currentDate.getTime() + myTargetTokenEntity.getExpiresIn()));
+                    try {
+                        entity.setTimeRenew(dateFormat.parse(dateFormat.format(
+                                new Date(currentDate.getTime() + myTargetTokenEntity.getExpiresIn()))));
+                    } catch (ParseException e) {
+                        logger.debug(e.getMessage());
+                    }
                     mySQLDAO.updateMytargetToken(entity);
                 }
                 else {
@@ -53,8 +76,17 @@ public class TokenAdder {
         entity.setTokenType(myTargetTokenEntity.getTokenType());
         entity.setToken(myTargetTokenEntity.getAccessToken());
         entity.setTimeCreate(currentDate);
-        entity.setTimeExpired(new Date(myTargetTokenEntity.getExpiresIn()));
-        entity.setTimeRenew(new Date(currentDate.getTime() + myTargetTokenEntity.getExpiresIn()));
+        try {
+            entity.setTimeExpired(dateFormat.parse(dateFormat.format(new Date(myTargetTokenEntity.getExpiresIn()))));
+        } catch (ParseException e) {
+            logger.debug(e.getMessage());
+        }
+        try {
+            entity.setTimeRenew(dateFormat.parse(dateFormat.format(
+                    new Date(currentDate.getTime() + myTargetTokenEntity.getExpiresIn()))));
+        } catch (ParseException e) {
+            logger.debug(e.getMessage());
+        }
         entity.setRefreshToken(myTargetTokenEntity.getRefreshToken());
         entity.setIdAccount(myTarget.getIdAccount());
         mySQLDAO.addMyTargetToken(entity);
@@ -68,9 +100,18 @@ public class TokenAdder {
                             cheetAh.updateToken();
                     entity.setToken(cheetahTokenEntity.getAccessToken());
                     entity.setTokenType(cheetahTokenEntity.getTokenType());
-                    entity.setTimeExpired(new Date(cheetahTokenEntity.getExpiresIn()));
+                    try {
+                        entity.setTimeExpired(dateFormat.parse(dateFormat.format(new Date(cheetahTokenEntity.getExpiresIn()))));
+                    } catch (ParseException e) {
+                        logger.debug(e.getMessage());
+                    }
                     entity.setTimeCreate(currentDate);
-                    entity.setTimeRenew(new Date(currentDate.getTime() + cheetahTokenEntity.getExpiresIn()));
+                    try {
+                        entity.setTimeRenew(dateFormat.parse(dateFormat.format(
+                                new Date(currentDate.getTime() + cheetahTokenEntity.getExpiresIn()))));
+                    } catch (ParseException e) {
+                        logger.debug(e.getMessage());
+                    }
                     mySQLDAO.updateCheetahToken(entity);
                 }
                 else {
@@ -88,8 +129,17 @@ public class TokenAdder {
         entity.setTokenType(cheetahTokenEntity.getTokenType());
         entity.setToken(cheetahTokenEntity.getAccessToken());
         entity.setTimeCreate(currentDate);
-        entity.setTimeExpired(new Date(cheetahTokenEntity.getExpiresIn()));
-        entity.setTimeRenew(new Date(currentDate.getTime() + cheetahTokenEntity.getExpiresIn()));
+        try {
+            entity.setTimeExpired(dateFormat.parse(dateFormat.format(new Date(cheetahTokenEntity.getExpiresIn()))));
+        } catch (ParseException e) {
+            logger.debug(e.getMessage());
+        }
+        try {
+            entity.setTimeRenew(dateFormat.parse(dateFormat.format(
+                    new Date(currentDate.getTime() + cheetahTokenEntity.getExpiresIn()))));
+        } catch (ParseException e) {
+            logger.debug(e.getMessage());
+        }
         entity.setIdAccount(cheetAh.getIdAccount());
         mySQLDAO.addCheetahToken(entity);
     }
