@@ -80,4 +80,8 @@ public abstract class TokenEntity {
     public void setTimeRenew(Date timeRenew) {
         this.timeRenew = timeRenew;
     }
+
+    public void setIdAccount(int idAccount) {
+        this.idAccount = idAccount;
+    }
 }

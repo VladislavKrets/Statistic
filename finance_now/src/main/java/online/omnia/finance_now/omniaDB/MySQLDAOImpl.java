@@ -3,6 +3,8 @@ package online.omnia.finance_now.omniaDB;
 import online.omnia.finance_now.campaign.*;
 import online.omnia.finance_now.networks.BaseNetwork;
 import online.omnia.finance_now.utils.FinanceNow;
+import org.hibernate.LockMode;
+import org.hibernate.LockOptions;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -73,6 +75,7 @@ public class MySQLDAOImpl implements MySQLDAO{
     public void updateMytargetToken(MyTargetTokenEntity entity) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
+        session.lock(entity, LockMode.UPGRADE_NOWAIT);
         session.update(entity);
         session.getTransaction().commit();
         session.close();
@@ -81,6 +84,7 @@ public class MySQLDAOImpl implements MySQLDAO{
     public void updateCheetahToken(CheetahTokenEntity entity) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
+        session.lock(entity, LockMode.UPGRADE_NOWAIT);
         session.update(entity);
         session.getTransaction().commit();
         session.close();

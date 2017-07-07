@@ -19,8 +19,8 @@ import java.util.List;
 public class MyTarget extends BaseNetwork{
     final static Logger logger = Logger.getLogger(MyTarget.class);
     private String refreshToken = "vmtYJVtfR6bX3kp6g9KTlOVy3gm5IWtxfk1pSOZDWixlPAeztwDb5kbB6aEI45qQ5LEf0XXTeYNlvGqHCwzuSsqG0KbW9FUFMzzRUArjbSUfqz00a9eBG9I24JGLoiR6YYhXWzwyj6FHQvNeTlAkt5hPBvIFpNRZuaUGGiM5GHcmTwbZNXmWu4pAQfqZATDr6FzQCjVxQUm53vCPH3ONiwkxhyQpaKJEWozQEMOCl6J5qmUfJ1";
-    public MyTarget(String baseURL, String clientId, String clientCredentials) {
-        super(baseURL, clientId, clientCredentials);
+    public MyTarget(String baseURL, String clientId, String clientCredentials, int idAccount) {
+        super(baseURL, clientId, clientCredentials, idAccount);
         getHeadersMap().put("Content-Type", "application/x-www-form-urlencoded");
         getHeadersMap().put("Authorization", "Bearer AfknWkWlUUBaCwdVe9PW9KukpFeW2u2DDNdUqmU03DkiY1iYD48ByxM8oaIB2dOX2TJctp1Ms79gFx9jRUUkOg7tdCrs0UmYKP3XtbfFULaFFxKR3q6znqirFXySXIEHN7sMaH3RMmsVdV2T7RY0msdk9mjFQ48t7DFfvEcacHape3OuRzYxqU0zvmSkfhpG8NlcU5guonhiY4eQycy3r9PfQKxfqZ0tdGJxI7I1SeMLQ");
 
@@ -52,7 +52,11 @@ public class MyTarget extends BaseNetwork{
         }
         return null;
     }
-
+    public void setAccessToken(MyTargetTokenEntity entity) {
+        getHeadersMap().put("Authorization", String.format("%s &s",
+                entity.getTokenType(), entity.getAccessToken()));
+        refreshToken = entity.getRefreshToken();
+    }
     @Override
     public String getCurrentToken() {
         if (getHeadersMap().containsKey("Authorization")) return getHeadersMap().get("Authorization");
@@ -105,4 +109,5 @@ public class MyTarget extends BaseNetwork{
         }
         return null;
     }
+
 }

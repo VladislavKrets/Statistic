@@ -34,12 +34,14 @@ public class Broker {
         for (Account account : accounts) {
             switch (account.getType()) {
                 case "mytarget": {
-                    network = new MyTarget(account.getApiURL(), account.getClientId(), account.getClientSecret());
+                    network = new MyTarget(account.getApiURL(), account.getClientId(),
+                            account.getClientSecret(), account.getAccountId());
                     networks.add(network);
                     break;
                 }
                 case "cheetah": {
-                    network = new CheetahAds(account.getApiURL(), account.getClientId(), account.getClientSecret());
+                    network = new CheetahAds(account.getApiURL(), account.getClientId(),
+                            account.getClientSecret(), account.getAccountId());
                     networks.add(network);
                     break;
                 }
