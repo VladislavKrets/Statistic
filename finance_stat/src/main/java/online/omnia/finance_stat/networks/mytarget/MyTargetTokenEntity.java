@@ -6,16 +6,15 @@ package online.omnia.finance_stat.networks.mytarget;
 public class MyTargetTokenEntity {
     private String accessToken;
     private String tokenType;
-    private String expiresIn;
+    private long expiresIn;
     private String refreshToken;
     private int tokens_left;
 
-    public MyTargetTokenEntity(String accessToken, String tokenType, String expiresIn, String refreshToken, int tokens_left) {
+    public MyTargetTokenEntity(String accessToken, String tokenType, long expiresIn, String refreshToken) {
         this.accessToken = accessToken;
         this.tokenType = tokenType;
         this.expiresIn = expiresIn;
         this.refreshToken = refreshToken;
-        this.tokens_left = tokens_left;
     }
 
     public String getAccessToken() {
@@ -26,7 +25,7 @@ public class MyTargetTokenEntity {
         return tokenType;
     }
 
-    public String getExpiresIn() {
+    public long getExpiresIn() {
         return expiresIn;
     }
 
@@ -36,5 +35,20 @@ public class MyTargetTokenEntity {
 
     public int getTokens_left() {
         return tokens_left;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+
+    @Override
+    public String toString() {
+        return "MyTargetTokenEntity{" +
+                "accessToken='" + accessToken + '\'' +
+                ", tokenType='" + tokenType + '\'' +
+                ", expiresIn='" + expiresIn + '\'' +
+                ", refreshToken='" + refreshToken + '\'' +
+                ", tokens_left=" + tokens_left +
+                '}';
     }
 }

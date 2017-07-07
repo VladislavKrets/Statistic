@@ -45,6 +45,8 @@ public class Broker {
                     networks.add(network);
                     break;
                 }
+                case "facebook": break;
+                case "adwords": break;
             }
         }
         return networks;

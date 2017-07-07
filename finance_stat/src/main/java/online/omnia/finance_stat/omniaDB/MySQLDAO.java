@@ -11,8 +11,7 @@ import java.util.List;
  */
 public interface MySQLDAO {
     List<Account> getAccounts();
-    Account getAccountByName(String name);
     List<FinanceStat> getFinances();
-    void addFinance(FinanceStat financeNow);
+    void addFinance(FinanceStat financeStat);
 
 }

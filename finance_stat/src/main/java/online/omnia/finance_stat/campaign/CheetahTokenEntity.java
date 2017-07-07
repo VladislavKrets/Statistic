@@ -10,10 +10,11 @@ import java.util.Date;
 @Entity
 @Table(name = "cheetah_token")
 public class CheetahTokenEntity extends TokenEntity{
+
     public CheetahTokenEntity() {
     }
 
-    public CheetahTokenEntity(int idAccount, String token, Date timeCreate, Date timeExpired, Date timeRenew) {
-        super(idAccount, token, timeCreate, timeExpired, timeRenew);
+    public CheetahTokenEntity(int idAccount, String token, String tokenType, Date timeCreate, Date timeExpired, Date timeRenew) {
+        super(idAccount, token, tokenType, timeCreate, timeExpired, timeRenew);
     }
 }
