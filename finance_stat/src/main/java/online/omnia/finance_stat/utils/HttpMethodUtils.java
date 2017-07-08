@@ -20,6 +20,7 @@ public class HttpMethodUtils {
     private CloseableHttpClient httpClient;
 
     public HttpMethodUtils(String baseUrl) {
+        if (!baseUrl.endsWith("/")) baseUrl = baseUrl + "/";
         this.baseUrl = baseUrl;
         httpClient = HttpClients.createDefault();
     }

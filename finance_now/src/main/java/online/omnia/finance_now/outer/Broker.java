@@ -8,9 +8,7 @@ import online.omnia.finance_now.omniaDB.MySQLDAOImpl;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -30,6 +28,7 @@ public class Broker {
     private List<BaseNetwork> getAllNetworks(){
         List<BaseNetwork> networks = new ArrayList<>();
         List<Account> accounts = mySQLDAO.getAccounts();
+
         BaseNetwork network;
         for (Account account : accounts) {
             switch (account.getType()) {
@@ -40,7 +39,10 @@ public class Broker {
                     break;
                 }
                 case "cheetah": {
-                    network = new CheetahAds(account.getApiURL(), account.getClientId(),
+                    String baseURL = account.getApiURL();
+                    if (!baseURL.startsWith("https://")) baseURL = "https://" + baseURL;
+                    if (!baseURL.endsWith("/")) baseURL = baseURL + "/";
+                    network = new CheetahAds(baseURL, account.getClientId(),
                             account.getClientSecret(), account.getAccountId());
                     networks.add(network);
                     break;

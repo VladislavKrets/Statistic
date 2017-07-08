@@ -16,8 +16,8 @@ public class MyTargetTokenEntity extends TokenEntity{
     public MyTargetTokenEntity() {
     }
 
-    public MyTargetTokenEntity(int idAccount, String tokenType, String token, Date timeCreate, Date timeExpired, Date timeRenew, String scope, String refreshToken) {
-        super(idAccount, token, tokenType, timeCreate, timeExpired, timeRenew);
+    public MyTargetTokenEntity(int idAccount, String tokenType, String token, Date timeCreate, Date timeExpired, String scope, String refreshToken) {
+        super(idAccount, token, tokenType, timeCreate, timeExpired);
         this.scope = scope;
         this.refreshToken = refreshToken;
     }

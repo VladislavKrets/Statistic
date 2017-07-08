@@ -9,32 +9,30 @@ import java.util.Date;
 @MappedSuperclass
 public abstract class TokenEntity {
     @Id
-    @Column(name = "id_account", length = 11)
+    @Column(name = "account_id", length = 11)
     private int idAccount;
-    @Column(name = "token", length = 50)
+    @Column(name = "access_token", length = 50)
     private String token;
     @Column(name = "token_type")
     private String tokenType;
-    @Column(name = "time_create", columnDefinition = "DATETIME")
+    @Column(name = "create_time", columnDefinition = "DATETIME")
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeCreate;
-    @Column(name = "time_expired", columnDefinition = "DATETIME")
+    @Column(name = "expires_time", columnDefinition = "DATETIME")
     @Temporal(TemporalType.TIMESTAMP)
     private Date timeExpired;
-    @Column(name = "time_renew", columnDefinition = "DATETIME")
-    private Date timeRenew;
 
 
     public TokenEntity() {
     }
 
-    public TokenEntity(int idAccount, String token, String tokenType, Date timeCreate, Date timeExpired, Date timeRenew) {
+    public TokenEntity(int idAccount, String token, String tokenType, Date timeCreate, Date timeExpired) {
         this.idAccount = idAccount;
         this.token = token;
         this.tokenType = tokenType;
         this.timeCreate = timeCreate;
         this.timeExpired = timeExpired;
-        this.timeRenew = timeRenew;
+
     }
 
     public String getToken() {
@@ -49,9 +47,6 @@ public abstract class TokenEntity {
         return timeExpired;
     }
 
-    public Date getTimeRenew() {
-        return timeRenew;
-    }
 
     public int getIdAccount() {
         return idAccount;
@@ -77,9 +72,6 @@ public abstract class TokenEntity {
         this.timeExpired = timeExpired;
     }
 
-    public void setTimeRenew(Date timeRenew) {
-        this.timeRenew = timeRenew;
-    }
 
     public void setIdAccount(int idAccount) {
         this.idAccount = idAccount;

@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.SimpleTimeZone;
 import java.util.TimeZone;
 import java.util.concurrent.CountDownLatch;
 
@@ -39,19 +38,24 @@ public class ConnectorThread implements Runnable{
          TokenAdder.tokenChangeCheetah((CheetahAds) network);
         }
         Integer accountId = network.getAccountId();
+
         Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         try {
            date = dateFormat.parse(dateFormat.format(date));
+
         } catch (ParseException e) {
             logger.debug(e.getMessage());
+
         }
         Double balance = network.getUserBalance();
+
         String currency = network.getCurrency();
-        FinanceStat financeNow = new FinanceStat(accountId, date,
+
+        FinanceStat financeStat = new FinanceStat(accountId, date,
                 balance, currency);
-        mySQLDAO.addFinance(financeNow);
+        mySQLDAO.addFinance(financeStat);
         countDownLatch.countDown();
     }
 }

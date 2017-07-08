@@ -1,15 +1,15 @@
 package online.omnia.finance_now.omniaDB;
 
-import online.omnia.finance_now.campaign.*;
-import online.omnia.finance_now.networks.BaseNetwork;
+import online.omnia.finance_now.campaign.Account;
+import online.omnia.finance_now.campaign.CheetahTokenEntity;
+import online.omnia.finance_now.campaign.MyTargetTokenEntity;
 import online.omnia.finance_now.utils.FinanceNow;
-import org.hibernate.LockMode;
-import org.hibernate.LockOptions;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import javax.persistence.LockModeType;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
  * Created by lollipop on 04.07.2017.
  */
 public class MySQLDAOImpl implements MySQLDAO{
-
+    @PersistenceContext
     private static Configuration configuration;
     private static SessionFactory sessionFactory;
     private static MySQLDAOImpl mySQLDAO;
@@ -31,14 +31,14 @@ public class MySQLDAOImpl implements MySQLDAO{
                 .addAnnotatedClass(MyTargetTokenEntity.class)
                 .configure();
         sessionFactory = configuration.buildSessionFactory();
+
     }
 
     private MySQLDAOImpl() {}
     @Override
     public List<Account> getAccounts() {
         Session session = sessionFactory.openSession();
-        Query query = session.createQuery("from Account", Account.class);
-        List<Account> accounts = query.getResultList();
+        List<Account> accounts = session.createQuery("from Account", Account.class).list();
         session.close();
         return accounts;
     }
@@ -75,18 +75,26 @@ public class MySQLDAOImpl implements MySQLDAO{
 
     public synchronized void updateMytargetToken(MyTargetTokenEntity entity) {
         Session session = sessionFactory.openSession();
+        session.persist(entity);
         session.beginTransaction();
         session.lock(entity, LockModeType.PESSIMISTIC_WRITE);
-        session.update(entity);
+        session.createQuery("update CheetahTokenEntity set token=:token, timeCreate=:timeCreate, timeExpired=:timeExpired")
+                .setParameter("token", entity.getToken())
+                .setParameter("timeCreate", entity.getTimeCreate())
+                .setParameter("timeExpired", entity.getTimeExpired()).executeUpdate();
         session.getTransaction().commit();
         session.close();
     }
 
     public synchronized void updateCheetahToken(CheetahTokenEntity entity) {
         Session session = sessionFactory.openSession();
+        session.persist(entity);
         session.beginTransaction();
         session.lock(entity, LockModeType.PESSIMISTIC_WRITE);
-        session.update(entity);
+        session.createQuery("update CheetahTokenEntity set token=:token, timeCreate=:timeCreate, timeExpired=:timeExpired")
+        .setParameter("token", entity.getToken())
+        .setParameter("timeCreate", entity.getTimeCreate())
+        .setParameter("timeExpired", entity.getTimeExpired()).executeUpdate();
         session.getTransaction().commit();
         session.close();
     }

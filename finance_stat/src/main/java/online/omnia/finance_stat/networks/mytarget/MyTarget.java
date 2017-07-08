@@ -19,6 +19,7 @@ import java.util.List;
 public class MyTarget extends BaseNetwork {
     final static Logger logger = Logger.getLogger(MyTarget.class);
     private String refreshToken = "vmtYJVtfR6bX3kp6g9KTlOVy3gm5IWtxfk1pSOZDWixlPAeztwDb5kbB6aEI45qQ5LEf0XXTeYNlvGqHCwzuSsqG0KbW9FUFMzzRUArjbSUfqz00a9eBG9I24JGLoiR6YYhXWzwyj6FHQvNeTlAkt5hPBvIFpNRZuaUGGiM5GHcmTwbZNXmWu4pAQfqZATDr6FzQCjVxQUm53vCPH3ONiwkxhyQpaKJEWozQEMOCl6J5qmUfJ1";
+    private int accountId = -1;
     public MyTarget(String baseURL, String clientId, String clientCredentials, int idAccount) {
         super(baseURL, clientId, clientCredentials, idAccount);
         getHeadersMap().put("Content-Type", "application/x-www-form-urlencoded");
@@ -53,7 +54,7 @@ public class MyTarget extends BaseNetwork {
         return null;
     }
     public void setAccessToken(MyTargetTokenEntity entity) {
-        getHeadersMap().put("Authorization", String.format("%s &s",
+        getHeadersMap().put("Authorization", String.format("%s %s",
                 entity.getTokenType(), entity.getAccessToken()));
         refreshToken = entity.getRefreshToken();
     }
@@ -84,12 +85,15 @@ public class MyTarget extends BaseNetwork {
 
     @Override
     public Integer getAccountId() {
+        if (accountId != -1) return accountId;
         try {
             String answer = methods().getMethod("user.json", getHeadersMap());
             GsonBuilder builder = new GsonBuilder();
             builder.registerTypeAdapter(Integer.class, new MyTargetUserIdDeserializer());
             Gson gson = builder.create();
-            return gson.fromJson(answer, Integer.class);
+            int id = gson.fromJson(answer, Integer.class);
+            this.accountId = id;
+            return id;
         } catch (IOException e) {
             logger.debug(e.getMessage());
         }

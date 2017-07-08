@@ -10,7 +10,7 @@ import java.util.Date;
 @Table(name = "finance_2")
 public class FinanceNow {
     @Id
-    @Column(name = "id_finance_2", length = 11)
+    @Column(name = "id", length = 11)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int idFinanceNow;
     @Column(name = "account_id", length = 11)

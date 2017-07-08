@@ -16,12 +16,13 @@ public abstract class BaseNetwork {
     private String clientCredentials;
     private int idAccount;
 
-    public BaseNetwork(String baseURL, String clientId, String clientCredentials, int accountId) {
+
+    public BaseNetwork(String baseURL, String clientId, String clientCredentials, int idAccount) {
         methods = new HttpMethodUtils(baseURL);
         headersMap = new HashMap<String, String>();
         this.clientId = clientId;
         this.clientCredentials = clientCredentials;
-        this.idAccount = accountId;
+        this.idAccount = idAccount;
 
     }
     public abstract Double getUserBalance();
@@ -30,9 +31,6 @@ public abstract class BaseNetwork {
     public abstract String getCurrentToken();
     public abstract String type();
 
-    public int getIdAccount() {
-        return idAccount;
-    }
 
     public String getCurrency() {
         return "USD";
@@ -52,5 +50,9 @@ public abstract class BaseNetwork {
 
     public String getClientCredentials() {
         return clientCredentials;
+    }
+
+    public int getIdAccount() {
+        return idAccount;
     }
 }

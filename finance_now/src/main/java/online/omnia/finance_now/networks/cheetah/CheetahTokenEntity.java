@@ -1,7 +1,5 @@
 package online.omnia.finance_now.networks.cheetah;
 
-import javax.persistence.Entity;
-import java.util.Date;
 
 /**
  * Created by lollipop on 05.07.2017.

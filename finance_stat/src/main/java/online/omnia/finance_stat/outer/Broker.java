@@ -28,6 +28,7 @@ public class Broker {
     private List<BaseNetwork> getAllNetworks(){
         List<BaseNetwork> networks = new ArrayList<>();
         List<Account> accounts = mySQLDAO.getAccounts();
+
         BaseNetwork network;
         for (Account account : accounts) {
             switch (account.getType()) {
@@ -38,7 +39,10 @@ public class Broker {
                     break;
                 }
                 case "cheetah": {
-                    network = new CheetahAds(account.getApiURL(), account.getClientId(),
+                    String baseURL = account.getApiURL();
+                    if (!baseURL.startsWith("https://")) baseURL = "https://" + baseURL;
+                    if (!baseURL.endsWith("/")) baseURL = baseURL + "/";
+                    network = new CheetahAds(baseURL, account.getClientId(),
                             account.getClientSecret(), account.getAccountId());
                     networks.add(network);
                     break;

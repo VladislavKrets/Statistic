@@ -3,7 +3,6 @@ package online.omnia.finance_now.networks.cheetah;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import online.omnia.finance_now.networks.BaseNetwork;
-import online.omnia.finance_now.networks.mytarget.MyTargetTokenEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.log4j.Logger;
@@ -15,11 +14,13 @@ import java.util.List;
 /**
  * Created by lollipop on 03.07.2017.
  */
-public class CheetahAds extends BaseNetwork{
+public class CheetahAds extends BaseNetwork {
 
     final static Logger logger = Logger.getLogger(CheetahAds.class);
+    private int accountId = -1;
 
     public CheetahAds(String baseURL, String clientId, String clientCredentials, int idAccount) {
+
         super(baseURL, clientId, clientCredentials, idAccount);
         getHeadersMap().put("Accept", "application/json,application/x.orion.v1+json");
 
@@ -51,7 +52,7 @@ public class CheetahAds extends BaseNetwork{
 
 
     public void setAccessToken(CheetahTokenEntity entity) {
-        getHeadersMap().put("Authorization", String.format("%s &s",
+        getHeadersMap().put("Authorization", String.format("%s %s",
                 entity.getTokenType(), entity.getAccessToken()));
     }
 
@@ -76,12 +77,15 @@ public class CheetahAds extends BaseNetwork{
 
     @Override
     public Integer getAccountId() {
+        if (accountId != -1) return accountId;
         try {
             String answer = methods().getMethod("user/info", getHeadersMap());
             GsonBuilder builder = new GsonBuilder();
             builder.registerTypeAdapter(Integer.class, new CheetahAdsUserIdDeserializer());
             Gson gson = builder.create();
-            return gson.fromJson(answer, Integer.class);
+            int id = gson.fromJson(answer, Integer.class);
+            this.accountId = id;
+            return id;
 
         } catch (IOException e) {
             logger.debug(e.getMessage());

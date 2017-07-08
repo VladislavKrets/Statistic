@@ -14,7 +14,7 @@ public class CheetahTokenEntity extends TokenEntity{
     public CheetahTokenEntity() {
     }
 
-    public CheetahTokenEntity(int idAccount, String token, String tokenType, Date timeCreate, Date timeExpired, Date timeRenew) {
-        super(idAccount, token, tokenType, timeCreate, timeExpired, timeRenew);
+    public CheetahTokenEntity(int idAccount, String token, String tokenType, Date timeCreate, Date timeExpired) {
+        super(idAccount, token, tokenType, timeCreate, timeExpired);
     }
 }

@@ -1,6 +1,5 @@
 package online.omnia.finance_now.outer;
 
-import online.omnia.finance_now.campaign.Account;
 import online.omnia.finance_now.networks.BaseNetwork;
 import online.omnia.finance_now.networks.cheetah.CheetahAds;
 import online.omnia.finance_now.networks.mytarget.MyTarget;
@@ -40,16 +39,21 @@ public class ConnectorThread implements Runnable{
          TokenAdder.tokenChangeCheetah((CheetahAds) network);
         }
         Integer accountId = network.getAccountId();
+
         Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         try {
            date = dateFormat.parse(dateFormat.format(date));
+
         } catch (ParseException e) {
             logger.debug(e.getMessage());
+
         }
         Double balance = network.getUserBalance();
+
         String currency = network.getCurrency();
+
         FinanceNow financeNow = new FinanceNow(accountId, date,
                 balance, currency);
         mySQLDAO.addFinance(financeNow);
